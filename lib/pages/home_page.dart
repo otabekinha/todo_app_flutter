@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_todo/utils/todo_list.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -11,10 +11,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
   List toDoList = [
-    ['Code With Otabek', true],
-    ['Learn Flutter', true],
-    ['Drink Coffee', false],
-    ['Explore Firebase', false],
+    ['01', false],
+    ['02', false],
+    ['03', false],
+    ['04', false],
   ];
 
   void checkBoxChanged(int index) {
@@ -39,12 +39,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple.shade300,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Simple Todo',
+          'Basic Todo Concept',
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color.fromARGB(255, 14, 126, 255),
         foregroundColor: Colors.white,
       ),
       body: ListView.builder(

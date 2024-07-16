@@ -49,6 +49,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        testInstrumentationRunner "pl.leancode.patrol.PatrolJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: "true"
+
     }
 
     buildTypes {
@@ -57,11 +60,22 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+        debug{
+            minifyEnabled false
+        }
     }
+
+    testOptions {
+     execution "ANDROIDX_TEST_ORCHESTRATOR"
+  }
+
 }
 
 flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+      androidTestUtil "androidx.test:orchestrator:1.4.2"
+
+}
