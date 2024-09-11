@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_todo/utils/todo_list.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,16 +24,41 @@ class _HomePageState extends State<HomePage> {
   }
 
   void saveNewTask() {
-    setState(() {
-      toDoList.add([_controller.text, false]);
-      _controller.clear();
-    });
+    // solved bug that allows users to add empty tasks
+
+    //check if controller is not empty before adding to task
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        toDoList.add([_controller.text, false]);
+        _controller.clear();
+      });
+    } else {}
   }
 
   void deleteTask(int index) {
+    // show a dialogbox to confirm delete to avoid errorneous deletions
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Confirm delete"),
+        content: const Text("Are you sure you want to delete this item?"),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel")),
+          TextButton(
+              onPressed: () => deleteItem(index), child: const Text("Ok")),
+        ],
+      ),
+    );
+  }
+
+  void deleteItem(int index) {
     setState(() {
       toDoList.removeAt(index);
     });
+    //clear/pop the dialog box after deleting item
+    Navigator.pop(context);
   }
 
   @override
@@ -70,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                 child: TextField(
                   controller: _controller,
                   decoration: InputDecoration(
-                    hintText: 'Add a new todo items',
+                    hintText: 'Add a new todo item',
                     filled: true,
                     fillColor: Colors.deepPurple.shade200,
                     enabledBorder: OutlineInputBorder(
